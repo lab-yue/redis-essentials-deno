@@ -18,7 +18,7 @@ Deno.test("mget mset", async () => {
 });
 
 Deno.test("delay and ttl", async () => {
-  await redis.set("delayK", "delayV");
+  assertEquals(await redis.set("delayK", "delayV"), "OK");
   assertEquals(await redis.ttl("delayK"), -1);
   assertEquals(await redis.expire("delayK", 2), 1);
   assertEquals(await redis.get("delayK"), "delayV");
