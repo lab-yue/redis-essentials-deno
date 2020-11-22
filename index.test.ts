@@ -50,9 +50,32 @@ Deno.test(
   })
 );
 
+Deno.test(
+  "list",
+  withKeys(["books"], async (key) => {
+    assertEquals(await redis.lpush(key, "Clean Code"), 1);
+    assertEquals(await redis.rpush(key, "Code Complete"), 2);
+    assertEquals(await redis.lpush(key, "Peopleware"), 3);
+    assertEquals(await redis.llen(key), 3);
+    assertEquals(await redis.lindex(key, 1), "Clean Code");
+    assertEquals(await redis.lrange(key, 0, 1), ["Peopleware", "Clean Code"]);
+    assertEquals(await redis.lrange(key, 0, -1), [
+      "Peopleware",
+      "Clean Code",
+      "Code Complete",
+    ]);
+    assertEquals(await redis.lpop(key), "Peopleware");
+    assertEquals(await redis.rpop(key), "Code Complete");
+  })
+);
+
 function withKeys(args: string[], fn: (...args: string[]) => unknown) {
   return async () => {
-    await fn(...args);
+    try {
+      await fn(...args);
+    } catch (e) {
+      console.log(e);
+    }
     await redis.del(...args);
   };
 }
