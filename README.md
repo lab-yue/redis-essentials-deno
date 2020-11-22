@@ -1,0 +1,1 @@
+Code as notes while reading [Redis Essentials](https://www.amazon.com/Redis-Essentials-Maxwell-Dayvson-Silva-ebook/dp/B00ZXFCFLO)
