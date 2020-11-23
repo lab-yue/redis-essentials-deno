@@ -1,11 +1,6 @@
 import { assertEquals } from "https://deno.land/std@0.78.0/testing/asserts.ts";
 import { delay } from "https://deno.land/std@0.78.0/async/delay.ts";
-import { connect } from "https://deno.land/x/redis/mod.ts";
-
-const redis = await connect({
-  hostname: "127.0.0.1",
-  port: 6379,
-});
+import { redis, withKeys } from "./index.ts";
 
 Deno.test(
   "get set",
@@ -68,14 +63,3 @@ Deno.test(
     assertEquals(await redis.rpop(key), "Code Complete");
   })
 );
-
-function withKeys(args: string[], fn: (...args: string[]) => unknown) {
-  return async () => {
-    try {
-      await fn(...args);
-    } catch (e) {
-      console.log(e);
-    }
-    await redis.del(...args);
-  };
-}
