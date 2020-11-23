@@ -5,15 +5,14 @@ export const redis = await connect({
   port: 6379,
 });
 
-
 export function withKeys(args: string[], fn: (...args: string[]) => unknown) {
-    return async () => {
-      try {
-        await fn(...args);
-      } catch (e) {
-        console.log(e);
-      }
-      await redis.del(...args);
-    };
-  }
-  
+  return async () => {
+    await redis.del(...args);
+    try {
+      await fn(...args);
+    } catch (e) {
+      console.log(e);
+    }
+    await redis.del(...args);
+  };
+}
