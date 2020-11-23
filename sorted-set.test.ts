@@ -33,7 +33,7 @@ Deno.test(
       "Alice", // this two rank could be random
       "Max", // this two rank could be random
     ]);
-    assertEquals(await redis.zscore(leaders, "Zed"), "101");
+    assertEquals(await redis.zscore(leaders, "Zed"), "100");
     assertEquals(await redis.zrevrank(leaders, "Alice"), 2);
   })
 );
