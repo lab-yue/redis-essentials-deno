@@ -11,7 +11,7 @@ export function withKeys(args: string[], fn: (...args: string[]) => unknown) {
     try {
       await fn(...args);
     } catch (e) {
-      console.log(e);
+      throw e;
     }
     await redis.del(...args);
   };
