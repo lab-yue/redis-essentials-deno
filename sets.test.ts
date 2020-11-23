@@ -5,7 +5,7 @@ import {
 import { redis, withKeys } from "./index.ts";
 
 Deno.test(
-  "queue",
+  "sets",
   withKeys(["favoriteA", "favoriteB"], async (favoriteA, favoriteB) => {
     assertEquals(
       await redis.sadd(
