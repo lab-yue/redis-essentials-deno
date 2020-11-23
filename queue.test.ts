@@ -43,6 +43,7 @@ const consumer = (Q: ReturnType<typeof queue>) => ({
   },
 });
 
+// should be replaced by RPOPLPUSH
 Deno.test("queue", async () => {
   const Q = queue("log");
   await Promise.all([producer(Q).run(5), consumer(Q).run()]);
